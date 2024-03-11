@@ -3,34 +3,41 @@ import Character from './index';
 /* eslint no-underscore-dangle: 0 */
 
 export default class AttackRules extends Character {
-  set rangedAttack(distance) {
-    this._distance = distance;
-    this._attack = this.attack;
+  set distance(value) {
+    this._distance = value;
   }
 
-  get rangedAttack() {
-    if (this.type === 'demon' || this.type === 'magican') {
-      if (this._distance <= 1) {
-        this._attack = this.attack;
-      } else if (this._distance > 5) {
-        this._attack = 0;
-      } else {
-        this._attack = this.attack - (this.attack * ((this._distance - 1) * (10 / 100)));
-      }
-    }
-    return this._attack;
+  get distance() {
+    return this._distance;
   }
 
-  set stoned(activation) {
-    this._stoned = activation;
+  set stoned(value) {
+    this._stoned = value;
   }
 
   get stoned() {
-    if (this._stoned) {
-      this._attack = Math.round(this._attack - Math.log2(this._distance) * 5);
-      if (this._attack <= 0) {
-        this._attack = 0;
+    return this._stoned;
+  }
+
+  set attack(value) {
+    this._attack = value;
+  }
+
+  get attack() {
+    if (this.type === 'demon' || this.type === 'magican') {
+      if (this._distance > 5) {
+        return 0;
       }
+
+      if (this._stoned) {
+        const rangedAttack = this._attack - (this._attack * ((this._distance - 1) * (10 / 100)));
+        const stonedAttack = Math.round(rangedAttack - Math.log2(this._distance) * 5);
+        if (stonedAttack <= 0) {
+          return 0;
+        }
+        return stonedAttack;
+      }
+      return this._attack - (this._attack * ((this._distance - 1) * (10 / 100)));
     }
     return this._attack;
   }

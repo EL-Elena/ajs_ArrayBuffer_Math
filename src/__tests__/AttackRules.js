@@ -1,47 +1,47 @@
 import Demon from '../Demon';
-import Magican from '../Magican';
 import Bowman from '../Bowman';
 
 const newDemon = new Demon('Jack', 'demon');
-const newMagican = new Magican('Lo', 'magican');
 const newDBowman = new Bowman('Jack', 'bowman');
 
-test('Testing value of Attack with distance = 0', () => {
-  newDemon.rangedAttack = 0;
-  expect(newDemon.rangedAttack).toBe(100);
+test('Get distance', () => {
+  newDBowman.distance = 2;
+  expect(newDBowman.distance).toBe(2);
 });
 
-test('Testing value of Attack with distance = 2', () => {
-  newDemon.rangedAttack = 2;
-  expect(newDemon.rangedAttack).toBe(90);
+test('Get stoned', () => {
+  newDBowman.stoned = true;
+  expect(newDBowman.stoned).toBe(true);
 });
 
-test('Testing value of Attack with distance = 10', () => {
-  newDemon.rangedAttack = 10;
-  expect(newDemon.rangedAttack).toBe(0);
+test('Checking attack rules for Bowman', () => {
+  newDBowman.attack = 100;
+  newDBowman.distance = 2;
+  expect(newDBowman.attack).toBe(100);
 });
 
-test('Testing value of Attack with distance = 2 and active stoned', () => {
-  newDemon.rangedAttack = 2;
-  newDemon.rangedAttack;
+test('Checking attack rules for Demon with distance 6', () => {
+  newDemon.attack = 100;
+  newDemon.distance = 6;
+  expect(newDemon.attack).toBe(0);
+});
+
+test('Checking attack rules for Demon with distance 2', () => {
+  newDemon.attack = 100;
+  newDemon.distance = 2;
+  expect(newDemon.attack).toBe(90);
+});
+
+test('Checking attack rules for Demon with distance 2 and stoned', () => {
+  newDemon.attack = 100;
+  newDemon.distance = 2;
   newDemon.stoned = true;
-  expect(newDemon.stoned).toBe(85);
+  expect(newDemon.attack).toBe(85);
 });
 
-test('Testing value of Attack with distance = 2 without stoned', () => {
-  newDemon.rangedAttack = 2;
-  newDemon.rangedAttack;
-  newDemon.stoned = false;
-  expect(newDemon.stoned).toBe(90);
-});
-
-test('Testing value of Attack with distance = 5, active stoned and low attack level', () => {
-  newMagican.rangedAttack = 5;
-  newMagican.stoned = true;
-  expect(newMagican.stoned).toBe(0);
-});
-
-test('Testing value of Attack for another character', () => {
-  newDBowman.rangedAttack = 2;
-  expect(newDBowman.rangedAttack).toBe(100);
+test('Checking attack rules for Demon with distance 5, stoned and low attack level', () => {
+  newDemon.attack = 8;
+  newDemon.distance = 5;
+  newDemon.stoned = true;
+  expect(newDemon.attack).toBe(0);
 });

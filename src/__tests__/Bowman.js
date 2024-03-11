@@ -7,7 +7,7 @@ const result = {
   type: 'bowman',
   health: 100,
   level: 1,
-  attack: 100,
+  _attack: 100,
   defence: 40,
 };
 
